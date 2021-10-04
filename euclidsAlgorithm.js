@@ -1,7 +1,8 @@
-// computes greates common divisor
-// reduces fractions to their simplest form
-// finds largest number that divides a and b without a remainder
-// example dividing a plot of land into squares
+// computes greatest common divisor
+  // reduces fractions to their simplest form
+    // finds largest number that divides a and b without a remainder
+
+// example: dividing a plot of land into squares
   // squares must be largest size possible and all equal size
 
   const divide = (height, width) => {
