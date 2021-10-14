@@ -32,20 +32,30 @@ class Graph {
   }
 
   findMangoSeller = () => {
+    // keep track of searched nodes
+    let searched = [];
     // while the queue still has nodes inside, search the queue
     while (this.queue.length !== 0) {
       // pop current node off the end of queue
       // save current node as a variable
       const person = this.dequeue();
       // check if current node meets search criteria
-      if (person.mangoSeller) {
-        // return node if criteria is met
-        console.log(`${person.name} is a Mango Seller`);
-        return `${person.name} is a Mango Seller`;
+      // and current node has not been searched already
+      if (searched.indexOf(person.name) === -1) {
+        if (person.mangoSeller) {
+          // return node if criteria is met
+          console.log(`${person.name} is a Mango Seller`);
+          return `${person.name} is a Mango Seller`;
+        } else {
+          // if criteria is not met
+            // add each child of the current node to the queue to be searched later
+          person.queue.forEach(newPerson => this.queue.unshift(newPerson));
+          // add node to the searched list
+          // prevent shared nodes from being repeatedly searched in an infinite loop
+          searched.push(person.name)
+        }
       } else {
-        // if criteria is not met
-          // add each child of the current node to the queue to be searched later
-        person.queue.forEach(newPerson => this.queue.unshift(newPerson));
+        continue;
       }
     }
     return false;
