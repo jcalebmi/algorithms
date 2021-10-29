@@ -11,7 +11,7 @@ const findSmallest = (arr) => {
   return smallestIndex;
 }
 
-// Bit-O: O(n2)
+// Big-O: O(n2)
 // Not very fast
 // Finds smallest element, adds to new array, deletes from old array and repeats
 

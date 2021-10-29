@@ -5,6 +5,14 @@
     // add each child of the node to the queue
     // then dequeue the node
   // simply: check node, add children to queue, pop node
+  // Big O:
+    // Run time at least O(# of edges)
+    // Adding one child to cue is O(1)
+    // Breadth first is O(V+E) - Vertices + Edges
+  // Uses:
+    // Finds shortest path from A to B
+      // Shortest based on number of edges
+      // For fastest path use Dijkstras algorithm
 
 class Graph {
   constructor(name, mangoSeller) {
