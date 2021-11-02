@@ -16,78 +16,100 @@
   // caclulate path
 
   class Graph {
-    constructor(name) {
-      this.name = name;
-      this.edges = {};
-      this.costs = {finish: Infinity};
-      this.parents = {finish: null};
-      this.processed = [];
+    constructor() {
+      // Store each node
+      this.vertices = [];
+      // Store the edges for each node
+      this.adjacencyList = {};
     }
 
-    addEdge(name, weight) {
-      const node = new Graph(name);
+    addVertex(vertex) {
+      this.vertices.push(vertex);
+      this.adjacencyList[vertex] = {};
+    }
 
-      this.edges[name] = {
-        node: name,
-        weight: weight
+    addEdge(vertex1, vertex2, weight) {
+      // Store each edge and its weight
+      this.adjacencyList[vertex1][vertex2] = weight;
+    }
+
+    changeWeight(vertex1, vertex2, weight) {
+      this.adjacencyList[vertex1][vertex2] = weight;
+    }
+
+    dijkstra(source) {
+      // Store the lowest cost for a node
+      let costs = {};
+      // Track the parents of a node
+      let parents = {};
+      // Track the visited nodes
+      let visited = new Set();
+
+      for (let i = 0; i < this.vertices.length; i++) {
+
+        if (this.vertices[i] === source) {
+          costs[source] = 0;
+        } else {
+          costs[this.vertices[i]] = Infinity;
+        }
+
+        parents[this.vertices[i]] = null;
       }
 
-      this.costs[name] = weight;
+      // Find the lowest cost neighboring node
+      let currVertex = this.lowestCost(costs, visited);
 
-      this.parents[name] = this.name;
 
-      return node;
+      while (currVertex !== null) {
+        let cost = costs[currVertex];
+        let neighbors = this.adjacencyList[currVertex];
+
+        for (let neighbor in neighbors) {
+          let newCost = cost + neighbors[neighbor];
+
+          if (costs[neighbor] > newCost) {
+            costs[neighbor] = newCost;
+            parents[neighbor] = currVertex;
+          }
+        }
+        visited.add(currVertex);
+        currVertex = this.lowestCost(costs, visited);
+      }
+      // Show lowest cost parent for each node
+      console.log('Parents: ' + JSON.stringify(parents));
+      // Show the lowest cost to reach each node on the way to the finish
+      console.log('Lowest cost per node: ' + JSON.stringify(costs));
     }
 
-    findLowestCost = (costs) => {
-      let cheapest;
-      let node;
-      for (let cost in this.costs) {
-        if (!cheapest || this.costs[cost] < cheapest) {
-          cheapest = this.costs[cost];
-          node = cost;
+    lowestCost(costs, visited) {
+      let min = Infinity;
+      let minVertex = null;
+
+      for (let vertex in costs) {
+        let cost = costs[vertex];
+        if (cost < min && !visited.has(vertex)) {
+          min = cost;
+          minVertex = vertex;
         }
       }
-      return node;
-    }
-
-    findPath = () => {
-      let node = this.findLowestCost(this.costs);
-      while (this.processed.indexOf(node) === -1) {
-        let cost = this.costs[node];
-
-
-        for (let edge in this.edges) {
-          let newCost;
-          if (this.edges[edge].weight) {
-            newCost = cost + this.edges[edge].weight
-          } else {
-            newCost = cost;
-          }
-
-          const name = this.edges[edge].node;
-          if (this.costs[name] > newCost) {
-            this.costs[name] = newCost;
-            this.parents[name] = node;
-          }
-        }
-        this.processed.push(node);
-        node = this.findLowestCost(this.costs);
-
-      }
-      console.log(node);
-      return node;
+      return minVertex;
     }
   }
 
   const graph = new Graph();
-  const a = graph.addEdge('a', 6);
-  const b = graph.addEdge('b', 2);
-  const finishA = a.addEdge('finish', 1);
-  const bToA = b.addEdge('a', 3);
-  const finishB = b.addEdge('finish', 5);
+  graph.addVertex('start')
+  graph.addVertex('a');
+  graph.addVertex('b');
+  graph.addVertex('finish');
 
-  graph.findPath();
+  graph.addEdge('start', 'a', 6);
+  graph.addEdge('start', 'b', 2);
+  graph.addEdge('a', 'finish', 1);
+  graph.addEdge('b', 'a', 3);
+  graph.addEdge('b', 'finish', 5);
+
+  graph.dijkstra('start');
+
 
 
 
