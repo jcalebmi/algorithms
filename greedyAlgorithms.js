@@ -2,6 +2,7 @@
 
 // Uses:
   // Approximating when calculating an exact solution takes too much time
+    // Solution will be close to the optimal solution, but will not be the optimal solution
   // Situations that need to calculate the most bang for your buck
     // Optimal schedule for a given time
     // Optimal items to store in a given space
