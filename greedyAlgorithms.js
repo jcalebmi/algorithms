@@ -6,11 +6,17 @@
     // Optimal schedule for a given time
     // Optimal items to store in a given space
     // Optimal items to take for a given value
+  // NP-Problems(Nondeterministi Polynomial)
+    // Handles few items quickly, but slows with more items
+    // "All combinations of X"
+    // "Every possible version of X"
+    // Problem involves a sequence, such as a sequence of cities, and is hard to solve
+    // Problem involves a set and is hard to solve
+    // If you can restate problem as the travelling salesperson problem
 
 // Steps:
   // At each step, pick the most optimal move
-
-
+  // Repeat until needs are met
 
 // Example states to be covered by radio stations
 let optionsToCover = new Set(['mt', 'wa', 'or', 'id', 'nv', 'ut', 'ca', 'az']);
@@ -30,8 +36,7 @@ let finalChoices = new Set();
 
 const greedyAlgorithm = () => {
   while (optionsToCover.size) {
-    let optimalChoice;
-    // a set of all uncovred options that the current move covers
+    // a set of all uncovered options that the current move covers
     let optionsCovered = new Set();
 
     for (let choice in choices) {

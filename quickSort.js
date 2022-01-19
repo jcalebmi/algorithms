@@ -24,16 +24,16 @@ const quickSort = (arr) => {
   if (arr.length < 2) {
     return arr;
   } else {
-    let pivot = arr[0];
+    let pivot = arr[Math.floor(arr.length/2)];
     let left = [];
     let right = [];
 
     // Split array into lesser and greater sides
-    for (let i = 0; i <= arr.length; i++) {
-      if (arr[i] < arr[0]) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] < pivot) {
         left.push(arr[i]);
       }
-      if (arr[i] > arr[0]) {
+      if (arr[i] > pivot) {
         right.push(arr[i]);
       }
     }
