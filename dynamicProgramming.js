@@ -30,9 +30,7 @@ const lengthOfMatchingSubstring = (string1, string2) => {
   return maxValue;
 }
 
-lengthOfMatchingSubstring('hish', 'fish');
-
-const lengthOfMatchingSequence = (string1, string2) => {
+const lengthOfMatchingSubsequence = (string1, string2) => {
   // Create Matrix
   let matrix = [];
   string1.split('').forEach(letterR => {
@@ -51,17 +49,22 @@ const lengthOfMatchingSequence = (string1, string2) => {
           matrix[i][j] += matrix[i-1][j-1] + 1;
         }
       } else {
-        // Pick the largest number of the cell above, and cell left of current cell
-        const top = matrix[i-1][j];
-        const left = matrix[i][j-1];
-        const largest = top > left ? top : left;
+        // Pick the largest value from the cell to the left and cell on top
+        let top = 0;
+        let left = 0;
+        if (matrix[i-1]) {
+          top = matrix[i-1][j];
+        }
+        if(matrix[i][j-1]) {
+          left = matrix[i][j-1];
+        }
 
+        const largest = top > left ? top : left;
+        // Set current cell equal to the largest previous value
         matrix[i][j] = largest;
       }
     }
   }
-
-  lengthOfMatchingSubsequence('hish', 'fish');
 
   console.log(matrix);
   // Find highest value in the matrix
@@ -72,3 +75,4 @@ const lengthOfMatchingSequence = (string1, string2) => {
 }
 
 lengthOfMatchingSubstring('hish', 'fish');
+lengthOfMatchingSubsequence('hish', 'fish');
