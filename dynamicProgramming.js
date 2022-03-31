@@ -1,4 +1,4 @@
-
+const prettier = require("prettier");
 
 const lengthOfMatchingSubstring = (string1, string2) => {
   // Create Matrix
@@ -111,8 +111,8 @@ const knapSackProblem = (items, size) => {
           // If there is space left over
             // Set value equal to current item plus the value of remaining space
             // Set items equal to current item plus the items that fit in the left over space
-          currentMax = itemValue + matrix[i-1][currentSize - itemSize].value;
-          currentItems = currentItems.concat(matrix[i-1][currentSize - itemSize].items);
+          currentMax = itemValue + matrix[i-1][currentSize - itemSize - 1].value;
+          currentItems = currentItems.concat(matrix[i-1][currentSize - itemSize - 1].items);
         }
 
         // Set new max and new list of items
@@ -128,7 +128,7 @@ const knapSackProblem = (items, size) => {
     matrix.push(row);
   });
 
-  console.log(matrix);
+  console.log(prettier.format(JSON.stringify(matrix)));
   const final = matrix.pop().pop();
   const finalItems = final.items;
   const maxValue = final.value;
@@ -169,7 +169,7 @@ const items2 = {
   }
 }
 
-// lengthOfMatchingSubstring('hish', 'fish');
-// lengthOfMatchingSubsequence('hish', 'fish');
+lengthOfMatchingSubstring('hish', 'fish');
+lengthOfMatchingSubsequence('hish', 'fish');
 knapSackProblem(items, 4);
 knapSackProblem(items2, 4);
