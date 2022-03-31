@@ -1,5 +1,14 @@
 const prettier = require("prettier");
 
+// USES:
+  // Calculates Optimal solution vs Greedy Algorithm that calculates approximate solution.
+// Steps:
+  // Starts by solving sub problems
+  // Builds up to solving bigger problem
+  // Create grid to represent value and cost of each item
+  // If current cost doesnt exceed maximum cost
+    // At each cell choose max value between current item and items at previous cell
+
 const lengthOfMatchingSubstring = (string1, string2) => {
   // Create Matrix
   let matrix = [];
