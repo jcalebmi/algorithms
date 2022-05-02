@@ -39,32 +39,43 @@ const morpheus = {
 }
 
 const allNeighbors = [morpheus, justin];
-
+// Find k Nearest Neighbors
 const kNearestNeighbors = (k, user, neighbors, nearest) => {
+  // If length of nearest neighbor array equals k, return array
   if(!neighbors.length || nearest.length === k) {
     return nearest;
   }
 
-  let current = neighbors[0];
+  let closest = neighbors[0];
   let currentI = 0;
 
+  // Check distance for each neighbor
   neighbors.forEach((n,i) => {
-    let currentSum = 0;
+    let closestSum = 0;
     let nSum = 0;
     Object.keys(n).forEach(k => {
       if(k !== 'name') {
-        currentSum += (user[k] - current[k]) ** 2;
+        // Find distance between user and current closest neighbor
+        // Add distance to current closest sum
+        closestSum += (user[k] - closest[k]) ** 2;
+        // Find distance between user and next neighbhor
+        // Add distance to nSum
         nSum += (user[k] - n[k]) ** 2;
       }
     })
 
-    current = Math.sqrt(currentSum) < Math.sqrt(nSum) ? current : n;
-    currentI = Math.sqrt(currentSum) < Math.sqrt(nSum) ? currentI : i;
+    // If current closest neighbor is closer, keep them as the closest neighbor
+    // Otherwise set the closest neighbor to current neighbor iteration
+    closest = Math.sqrt(closestSum) < Math.sqrt(nSum) ? closest : n;
+    currentI = Math.sqrt(closestSum) < Math.sqrt(nSum) ? currentI : i;
   });
 
-  nearest.push(current);
-  const updated = neighbors.filter(n => n.name !== current.name);
-  console.log('I', currentI, current)
+  // Add closest neibhor to array of closest neighbors
+  nearest.push(closest);
+  // Update list of remaining neighbors
+  const updated = neighbors.filter(n => n.name !== closest.name);
+  console.log('I', currentI, closest)
+  // Repeat
   kNearestNeighbors(k, user, updated, nearest);
 
   console.log(`${k} NEAREST NEIGHBORS:
@@ -80,17 +91,23 @@ const movieRatings = {
   Morpheus: 8
 }
 
+// Use regression to predict a users rating
 const regression = (k, user, neighbors) => {
+
+  // Find k nearest neighbors to base predictions on
   const kNeighbors = kNearestNeighbors(k, user, neighbors, []);
 
+  // Look at each neighbors rating
+  // Find the sum of their ratings
   let ratingSum = 0;
   kNeighbors.forEach(n => ratingSum += movieRatings[n.name])
 
+  // Get the average of k nearest neighbors rating for particular movie
   console.log(`${user.name}'s Movie Rating Prediction: ${ratingSum / kNeighbors.length}`)
   return `${user.name}'s Movie Rating Prediction: ${ratingSum / kNeighbors.length}`;
 
 }
 
-regression(2, priyanka, allNeighbors);
+// regression(2, priyanka, allNeighbors);
 
 
