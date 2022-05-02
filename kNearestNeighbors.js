@@ -7,6 +7,8 @@
 // Uses distance(Pythagorean Formula) to find nearest neigbhors
   // Could be skewed if to neighbors are similar but rate things more or less conservatively
   // Cosine Similarity can be used for more accurate measurement
+// Feature Extraction
+  // // Converting an item (fruit or user) into a list of numbers that can be compared
 // Feature Extraction Criteria
     // Features that directly correlate to current topic
     // Features that dont have bias
